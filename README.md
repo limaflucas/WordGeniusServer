@@ -1,1 +1,1 @@
-# uscs_word_genius_server
+# A simple word genius server for USCS students
