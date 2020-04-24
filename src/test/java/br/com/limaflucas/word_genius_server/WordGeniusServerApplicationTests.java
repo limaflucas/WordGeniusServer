@@ -1,4 +1,4 @@
-package br.com.limaflucas.WordGeniusServer;
+package br.com.limaflucas.word_genius_server;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

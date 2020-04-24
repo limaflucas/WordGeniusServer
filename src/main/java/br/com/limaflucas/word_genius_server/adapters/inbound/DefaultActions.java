@@ -1,6 +1,6 @@
-package br.com.limaflucas.WordGeniusServer.adapters.inbound;
+package br.com.limaflucas.word_genius_server.adapters.inbound;
 
-import br.com.limaflucas.WordGeniusServer.adapters.inbound.entities.*;
+import br.com.limaflucas.word_genius_server.adapters.inbound.entities.*;
 
 import java.util.UUID;
 

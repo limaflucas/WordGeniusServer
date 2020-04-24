@@ -1,8 +1,9 @@
-package br.com.limaflucas.WordGeniusServer.adapters.inbound.entities;
+package br.com.limaflucas.word_genius_server.adapters.inbound.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
@@ -10,4 +11,6 @@ import java.util.UUID;
 public class RegisterResponse {
 
     private UUID playerID;
+    private String name;
+    private LocalDateTime createdAt;
 }
