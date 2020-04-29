@@ -6,8 +6,10 @@ import br.com.limaflucas.word_genius_server.application.UseCaseChallengeGenius;
 import br.com.limaflucas.word_genius_server.application.UseCaseGetScore;
 import br.com.limaflucas.word_genius_server.application.UseCaseRegisterPlayer;
 import br.com.limaflucas.word_genius_server.application.UseCaseStartGame;
+import br.com.limaflucas.word_genius_server.application.dtos.GeniusResponseDTO;
 import br.com.limaflucas.word_genius_server.application.dtos.PlayerDTO;
 import br.com.limaflucas.word_genius_server.application.dtos.RegisteredPlayerDTO;
+import br.com.limaflucas.word_genius_server.application.dtos.StartGameDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +50,19 @@ public class GeniusController implements DefaultActions {
     @PostMapping(value = "/start/{playerID}")
     public StartResponse start(@PathVariable UUID playerID) {
 
-        return null;
+//        TODO: Buscar nome do cliente para exibir
+        log.info("Iniciando genius contra {}", playerID);
+        GeniusResponseDTO geniusResponseDTO = this.useCaseStartGame.start(StartGameDTO.builder()
+                .playerID(playerID)
+                .build());
+
+        return StartResponse.builder()
+                .gameID(geniusResponseDTO.getGameID())
+                .gameStatus(geniusResponseDTO.getGameStatus())
+                .playerID(geniusResponseDTO.getPlayerID())
+                .sequence(geniusResponseDTO.getSequece())
+                .statedAt(geniusResponseDTO.getPerformedAt())
+                .build();
     }
 
     @Override

@@ -8,11 +8,11 @@ import java.util.UUID;
 
 @Data
 @Builder
-public class GeniusResponseDTO {
+public class StartedGameDTO {
 
     private final UUID playerID;
-    private final LocalDateTime performedAt;
-    private final String sequece;
-    private final String gameStatus;
     private final UUID gameID;
+    private final LocalDateTime startedAt;
+    private final String sequence;
+    private final LocalDateTime lastGeneratedSequenceAt;
 }
