@@ -1,6 +1,7 @@
 package br.com.limaflucas.word_genius_server.adapters.outbound.database;
 
 import br.com.limaflucas.word_genius_server.adapters.outbound.database.entities.Games;
+import br.com.limaflucas.word_genius_server.adapters.outbound.database.repositories.GameRepository;
 import br.com.limaflucas.word_genius_server.application.dtos.StartedGameDTO;
 import br.com.limaflucas.word_genius_server.application.ports.StartGamePort;
 import lombok.RequiredArgsConstructor;

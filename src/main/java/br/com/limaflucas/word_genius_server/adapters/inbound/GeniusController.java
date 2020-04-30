@@ -6,10 +6,7 @@ import br.com.limaflucas.word_genius_server.application.UseCaseChallengeGenius;
 import br.com.limaflucas.word_genius_server.application.UseCaseGetScore;
 import br.com.limaflucas.word_genius_server.application.UseCaseRegisterPlayer;
 import br.com.limaflucas.word_genius_server.application.UseCaseStartGame;
-import br.com.limaflucas.word_genius_server.application.dtos.GeniusResponseDTO;
-import br.com.limaflucas.word_genius_server.application.dtos.PlayerDTO;
-import br.com.limaflucas.word_genius_server.application.dtos.RegisteredPlayerDTO;
-import br.com.limaflucas.word_genius_server.application.dtos.StartGameDTO;
+import br.com.limaflucas.word_genius_server.application.dtos.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +30,7 @@ public class GeniusController implements DefaultActions {
 //    MAPPERS
     private final GeneralMapper<ResgisterPayload, PlayerDTO> resgisterPayloadPlayerDTOGeneralMapper;
     private final GeneralMapper<RegisteredPlayerDTO, RegisterResponse> registeredPlayerDTORegisterResponseGeneralMapper;
+    private final GeneralMapper<PlayerResponse, PlayerResponseDTO> playerResponsePlayerResponseDTOGeneralMapper;
 
 
     @Override
@@ -69,7 +67,8 @@ public class GeniusController implements DefaultActions {
     @PostMapping(value = "/challenge")
     public GeniusResponse challenge(@RequestBody PlayerResponse response) {
 
-        return new GeniusResponse(response.getPlayerID(), response.getSequence());
+        GeniusResponseDTO geniusResponseDTO = this.useCaseChallengeGenius.challenge(this.playerResponsePlayerResponseDTOGeneralMapper.to(response));
+        return new GeniusResponse(geniusResponseDTO.getPlayerID(), geniusResponseDTO.getGameID(), geniusResponseDTO.getSequece(), geniusResponseDTO.getGameStatus(), geniusResponseDTO.getGameMessage());
     }
 
     @Override

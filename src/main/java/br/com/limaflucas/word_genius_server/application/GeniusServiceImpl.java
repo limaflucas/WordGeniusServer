@@ -2,8 +2,10 @@ package br.com.limaflucas.word_genius_server.application;
 
 import br.com.limaflucas.word_genius_server.application.dtos.*;
 import br.com.limaflucas.word_genius_server.application.mappers.GeneralMapper;
+import br.com.limaflucas.word_genius_server.application.ports.LoadGamePort;
 import br.com.limaflucas.word_genius_server.application.ports.RegisterPlayerPort;
 import br.com.limaflucas.word_genius_server.application.ports.StartGamePort;
+import br.com.limaflucas.word_genius_server.application.ports.UpdateGamePort;
 import br.com.limaflucas.word_genius_server.domain.Game;
 import br.com.limaflucas.word_genius_server.domain.GameStatus;
 import br.com.limaflucas.word_genius_server.domain.Genius;
@@ -20,8 +22,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class GeniusServiceImpl implements UseCaseRegisterPlayer, UseCaseStartGame, UseCaseChallengeGenius, UseCaseGetScore {
 
+//    PORTS
     private final RegisterPlayerPort registerPlayerPort;
     private final StartGamePort startGamePort;
+    private final LoadGamePort loadGamePort;
+    private final UpdateGamePort updateGamePort;
+
+//    MAPPERS
     private final GeneralMapper<PlayerPortDTO, RegisteredPlayerDTO> playerPortDTORegisteredPlayerDTOGeneralMapper;
     private final GeneralMapper<Game, GeniusResponseDTO> gameGeniusResponseDTOGeneralMapper;
 
@@ -41,7 +48,47 @@ public class GeniusServiceImpl implements UseCaseRegisterPlayer, UseCaseStartGam
 
     @Override
     public GeniusResponseDTO challenge(PlayerResponseDTO playerResponseDTO) {
-        return null;
+
+        StartedGameDTO startedGameDTO = this.loadGamePort.load(playerResponseDTO.getGameID());
+
+//        TODO :: VALIDAR SE O JOGO JA FOI ENCERRADO
+        Game runningGame = Game.builder()
+                .genius(Genius.builder()
+                        .timestampLastSequence(startedGameDTO.getLastGeneratedSequenceAt())
+                        .sequence(startedGameDTO.getSequence())
+                        .build())
+                .startedAt(startedGameDTO.getStartedAt())
+                .player(Player.builder()
+                        .id(startedGameDTO.getPlayerID())
+                        .build())
+                .id(startedGameDTO.getGameID())
+                .build();
+
+        GeniusResponseDTO geniusResponseDTO = null;
+        if (runningGame.getGenius().validadeSequence(playerResponseDTO.getSequence())) {
+            Genius nextChallenge = runningGame.getGenius().incrementSequence();
+            this.updateGamePort.update(UpdatedGameDTO.builder()
+                    .gameID(runningGame.getId())
+                    .lastSequenceGeneratedAt(nextChallenge.getTimestampLastSequence())
+                    .sequence(nextChallenge.getSequence())
+                    .build());
+            geniusResponseDTO = GeniusResponseDTO.builder()
+                    .gameStatus(GameStatus.RUNNING.name())
+                    .playerID(runningGame.getPlayer().getId())
+                    .gameID(runningGame.getId())
+                    .sequece(nextChallenge.getSequence())
+                    .performedAt(nextChallenge.getTimestampLastSequence())
+                    .build();
+        }
+        else
+            geniusResponseDTO = GeniusResponseDTO.builder()
+                    .gameID(runningGame.getId())
+                    .playerID(runningGame.getPlayer().getId())
+                    .gameStatus(GameStatus.LOSER.name())
+                    .gameMessage(GameStatus.LOSER.getMessage())
+                    .build();
+
+        return geniusResponseDTO;
     }
 
     @Override

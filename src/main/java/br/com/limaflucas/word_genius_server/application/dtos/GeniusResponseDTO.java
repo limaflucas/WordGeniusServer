@@ -14,5 +14,6 @@ public class GeniusResponseDTO {
     private final LocalDateTime performedAt;
     private final String sequece;
     private final String gameStatus;
+    private final String gameMessage;
     private final UUID gameID;
 }

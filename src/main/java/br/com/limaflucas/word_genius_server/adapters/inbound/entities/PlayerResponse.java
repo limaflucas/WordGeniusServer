@@ -10,5 +10,8 @@ import java.util.UUID;
 public class PlayerResponse {
 
     private UUID playerID;
+    private UUID gameID;
     private String sequence;
+
+//    TODO :: INCLUIR TIMESTAMP DA JOGADA PARA CALCULAR O TEMPO ENTRE AS RESPOSTAS
 }

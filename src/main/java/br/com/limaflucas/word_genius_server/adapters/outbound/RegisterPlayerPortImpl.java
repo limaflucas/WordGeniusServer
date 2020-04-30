@@ -1,6 +1,6 @@
 package br.com.limaflucas.word_genius_server.adapters.outbound;
 
-import br.com.limaflucas.word_genius_server.adapters.outbound.database.UserRepository;
+import br.com.limaflucas.word_genius_server.adapters.outbound.database.repositories.UserRepository;
 import br.com.limaflucas.word_genius_server.adapters.outbound.database.entities.Users;
 import br.com.limaflucas.word_genius_server.application.dtos.PlayerPortDTO;
 import br.com.limaflucas.word_genius_server.application.ports.RegisterPlayerPort;

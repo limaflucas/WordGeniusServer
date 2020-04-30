@@ -1,4 +1,4 @@
-package br.com.limaflucas.word_genius_server.adapters.outbound.database;
+package br.com.limaflucas.word_genius_server.adapters.outbound.database.repositories;
 
 import br.com.limaflucas.word_genius_server.adapters.outbound.database.entities.Users;
 import org.springframework.data.repository.CrudRepository;
