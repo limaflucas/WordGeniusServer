@@ -20,5 +20,5 @@ public class Users {
 
     @Id private UUID id;
     @Column(name = "nickname") private String name;
-    private LocalDateTime createdat;
+    private LocalDateTime createdAt;
 }
