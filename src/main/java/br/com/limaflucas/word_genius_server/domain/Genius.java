@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Random;
 
 @Data
@@ -14,8 +15,9 @@ public class Genius {
     private final String sequence;
 
     public Genius incrementSequence() {
+
         return Genius.builder()
-                .sequence(sequence.concat(String.valueOf(this.generateNextElement())))
+                .sequence(new StringBuilder(Objects.toString(this.sequence, "")).append(String.valueOf(this.generateNextElement())).toString())
                 .timestampLastSequence(LocalDateTime.now())
                 .build();
     }

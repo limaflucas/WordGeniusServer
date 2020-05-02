@@ -1,4 +1,4 @@
-package br.com.limaflucas.word_genius_server.adapters.outbound;
+package br.com.limaflucas.word_genius_server.adapters.outbound.database;
 
 import br.com.limaflucas.word_genius_server.adapters.outbound.database.repositories.UserRepository;
 import br.com.limaflucas.word_genius_server.adapters.outbound.database.entities.Users;

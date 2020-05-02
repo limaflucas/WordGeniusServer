@@ -19,6 +19,7 @@ import java.util.UUID;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/genius")
+@CrossOrigin(origins = "*")
 public class GeniusController implements DefaultActions {
 
 //    SERVICES
